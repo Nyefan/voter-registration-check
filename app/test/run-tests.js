@@ -1,9 +1,3 @@
-const selenium = require('selenium-standalone');
-const webdriverio = require('webdriverio');
-const statePath = '../main/states/';
-var phantomPath = require('phantomjs-prebuilt').path;
-
-// States that are commented out don't yet have submission scripts
 // TODO: the highest priority states to implement are:
 //       California         - June 7, 548 Delegates
 //       New Jersey         - June 7, 142 Delegates
@@ -19,10 +13,16 @@ var phantomPath = require('phantomjs-prebuilt').path;
 
 //       Washington D.C.    - June 14, 46 Delegates
 
+const selenium = require('selenium-standalone');
+const webdriverio = require('webdriverio');
+const statePath = '../main/states/';
+var phantomPath = require('phantomjs-prebuilt').path;
+
 var getPath = function(stateName) {
     return statePath + stateName + '.js';
 }
 
+// States that are commented out don't yet have submission scripts
 const alabama = require(getPath('alabama'));
 //const alaska = require(getPath('alaska'));
 //const arizona = require(getPath('arizona'));
