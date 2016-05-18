@@ -1,13 +1,62 @@
 const selenium = require('selenium-standalone');
 const webdriverio = require('webdriverio');
+const statePath = '../main/states/';
 var phantomPath = require('phantomjs-prebuilt').path;
 
-const indiana = require('../main/states/indiana.js');
-const kansas = require('../main/states/kansas.js');
-const kentucky = require('../main/states/kentucky.js');
-const montana = require('../main/states/montana.js');
-const oregon = require('../main/states/oregon.js');
-const westVirginia = require('../main/states/west-virginia.js');
+// States that are commented out don't yet have submission scripts
+
+var getPath = function(stateName) {
+    return statePath + stateName + '.js';
+}
+
+const alabama = require(getPath('alabama));
+//const alaska = require(getPath('alaska'));
+//const arizona = require(getPath('arizona'));
+//const arkansas = require(getPath('arkansas'));
+//const california = require(getPath('california'));
+//const colorado = require(getPath('colorado'));
+//const connecticut = require(getPath('connecticut'));
+//const delaware = require(getPath('delaware'));
+//const florida = require(getPath('florida'));
+//const georgia = require(getPath('georgia'));
+//const hawaii = require(getPath('hawaii'));
+//const idaho = require(getPath('idaho'));
+//const illinois = require(getPath('illinois'));
+const indiana = require(getPath('indiana'));
+//const iowa = require(getPath('iowa'));
+const kansas = require(getPath('kansas'));
+const kentucky = require(getPath('kentucky'));
+//const louisiana = require(getPath('louisiana'));
+//const maine = require(getPath('maine'));
+//const massachusetts = require(getPath('massachusetts'));
+//const michigan = require(getPath('michigan'));
+//const minnesota = require(getPath('minnesota'));
+//const missouri = require(getPath('missouri'));
+const montana = require(getPath('montana'));
+//const nebraska = require(getPath('nebraska'));
+//const nevada = require(getPath('nevada'));
+//const newHampshire = require(getPath('new-hampshire'));
+//const newJersey = require(getPath('new-jersey'));
+//const newMexico = require(getPath('new-mexico'));
+//const newYork = require(getPath('new-york'));
+//const northCarolina = require(getPath('north-carolina'));
+//const northDakota = require(getPath('north-dakota'));
+//const ohio = require(getPath('ohio'));
+//const oklahoma = require(getPath('oklahoma'));
+const oregon = require(getPath('oregon'));
+//const pennsylvania = require(getPath('pennsylvania'));
+//const rhodeIsland = require(getPath('rhode-island'));
+//const southCarolina = require(getPath('south-carolina'));
+//const southDakota = require(getPath('south-dakota'));
+//const tennessee = require(getPath('tennessee'));
+//const texas = require(getPath('texas'));
+//const utah = require(getPath('utah'));
+//const vermont = require(getPath('vermont'));
+//const virginia = require(getPath('virginia'));
+//const washington = require(getPath('washington'));
+const westVirginia = require(getPath('west-virginia'));
+//const wisconsin = require(getPath('wisconsin'));
+//const wyoming = require(getPath('wyoming'));
 
 
 var runTests = function() {
@@ -51,12 +100,18 @@ var runTests = function() {
             if (error) {
                 seleniumRunner.error(error, child, "seleniumRunner.afterStart");
             } else {
+                
+                
+                
+                /* Passing Tests */
+                runStateTest(alabama, child);
                 runStateTest(indiana);
                 runStateTest(kansas);
                 runStateTest(kentucky);
                 runStateTest(montana);
                 runStateTest(oregon);
                 runStateTest(westVirginia);
+                //*/
             }
             
             //child.kill();

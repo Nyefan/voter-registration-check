@@ -1,23 +1,23 @@
 const Q = require('q');
-const URL = "https://myvoteinfo.voteks.org/VoterView/RegistrantSearch.do";
-const NAME = 'Kansas';
+const URL = "https://myinfo.alabamavotes.gov/VoterView/RegistrantSearch.do";
+const NAME = 'Alabama';
 const INFO = {
-        'firstName':'#nameFirst',
-        'lastName':'#nameLast',
-        'dobMonth':'#dobMonth',
-        'dobDay':'#dobDay',
-        'dobYear':'#dobYear',
-        'county':'',
-        'submit':'input[type="submit"]',
-        'status': '#registrant > span:nth-of-type(4)',
-        'expectedStatus':'Active'
+    'firstName':'#nameFirst',
+    'lastName':'#nameLast',
+    'dobMonth':'#dobMonth',
+    'dobDay':'#dobDay',
+    'dobYear':'#dobYear',
+    'county':'',
+    'submit':'input[type="submit"]',
+    'status': '#registrant > span:nth-of-type(4)',
+    'expectedStatus':'ACTIVE'
 };
 
 var user = {
-    'county':'Sedgwick',
-    'firstName':'Anthony',
-    'lastName':'St Aubin',
-    'birthdate':'09/09/1993',
+    'county':'',
+    'firstName':'Terri',
+    'lastName':'Sewell',
+    'birthdate':'01/01/1965',
     'expectedParty':'Democratic'
 };
 
@@ -57,4 +57,3 @@ module.exports = {
         user:user,
         name:NAME
 };
-
