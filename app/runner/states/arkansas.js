@@ -1,63 +1,97 @@
-//this state has not yet been tested
+//TODO: Test this script once we have a valid test case
+
+"use strict";
+
+const _ = require('lodash');
 const Q = require('q');
-const URL = "https://www.voterview.ar-nova.org/VoterView/RegistrantSearch.do";
-const NAME = 'Arkansas';
-const INFO = {
-    'firstName':'#nameFirst',
-    'lastName':'#nameLast',
-    'dobMonth':'#dobMonth',
-    'dobDay':'#dobDay',
-    'dobYear':'#dobYear',
-    'submit':'input[type="submit"]',
-    // TODO: implement once you have a valid test case
-    'status': '#registrant > span:nth-of-type(4)',
-    'expectedStatus':'ACTIVE'
-};
+const help = require('../lib/utils.js');
 
-// TODO: acquire a complete valid test case (fname, lnama, dob)
-var user = {
-    'county':'',
-    'firstName':'Charles',
-    'middleInitial':'',
-    'lastName':'Armstrong',
-    'birthdate':'//',
-    'voter-id':'',
-    'dl-number':'',
-    'expectedParty':'Democratic'
-};
-
-var verifyRegistration = function(client, user) {
-	try {
-		if (user && typeof user['birthdate'] === "string") {
-			var splitBirth = user['birthdate'].split('/');
-			user['dobYear'] = splitBirth[2];
-			user['dobDay'] = splitBirth[1];
-			user['dobMonth'] = splitBirth[0];
+let state = {
+	Name: 'Arkansas'
+	URL: "https://www.voterview.ar-nova.org/VoterView/RegistrantSearch.do",
+	default: {
+		//TODO: Get a valid test case
+		'firstName':'Charles',
+		'lastName':'Armstrong',
+		'birthdate':'//',
+	},
+	selectorMap: {
+		'firstName':'#nameFirst',
+		'lastName':'#nameLast',
+		'dobMonth':'#dobMonth',
+		'dobDay':'#dobDay',
+		'dobYear':'#dobYear',
+		'submit':'input.search-button',
+		// TODO: implement this once we have a valid test case
+		'status': '#registrant > span:nth-of-type(4)',
+		'expectedStatus':'ACTIVE'
+		
+		'county':'#county',
+		'firstName': '#nameFirst',
+		'lastName': '#nameLast',
+		'dobMonth': '#dobMonth',
+		'dobDay': '#dobDay',
+		'dobYear': '#dobYear',
+		'submit': 'input.search-button',
+		'status': '#registrant > span:nth-of-type(4)',
+		'expectedStatus': 'Active'
+	},
+	_init: function() {
+		_.bindAll(this, 'verifyRegistration', 'manipulateData', 'script');
+	},
+	verifyRegistration: function(driver, user) {
+		if (!driver || !user) {
+			console.error(driver, user);
+			throw new Error('required arguments missing, driver, user');
 		}
-	}
-	catch(error) {
-		console.error(error);
-	}
 
-	return Q.promise(function(resolve, reject) {
-		client
-			.url(URL)
-                        .setValue(INFO['firstName'], user['firstName'])
-			.setValue(INFO['lastName'], user['lastName'])
-			.selectByValue(INFO['dobMonth'], user['dobMonth'])
-                        .selectByValue(INFO['dobYear'], user['dobYear'])
-                        .selectByValue(INFO['dobDay'], user['dobDay'])
-			.click(INFO['submit'])
-			.waitForExist(INFO['status'], 5000)
-			.getText(INFO['status'])
-			.then(function(value) {
-				resolve(INFO['expectedStatus'] === value.trim());
+		this.driver = driver;
+		this.user = this.manipulateData(user);
+
+		let script = this.script;
+		return Q.promise(script);
+	},
+
+	manipulateData: function(u) {
+		// If any UserInfo needs massaging...
+		let splitDate = u.birthdate.split('/');
+
+		u.dobMonth = splitDate[0];
+		u.dobDay = splitDate[1];
+		u.dobYear = splitDate[2];
+
+		return u;
+	},
+
+	script: function(resolve, reject) {
+		let d = this.driver;
+		let i = this.selectorMap;
+		let u = this.user;
+		let URL = this.URL;
+
+		help.goTo(d, URL);
+		Object.keys(i)
+			.forEach(function(key) {
+				if (i[key] && u[key]) {
+					help.setValue(d, i[key], u[key]);
+				}
 			});
-	});
+
+		help.findElement(d, i['submit'])
+			.then(function(element) {
+				element.click();
+				return help.findElement(d, i['status']); // Promise
+			})
+			.then(function(element) {
+				return element.getText(); // Promise
+			})
+			.then(function(text) {
+				let result = (text.trim() === i['expectedStatus']);
+				(result) ? resolve('Active') : reject('Inactive');
+			});
+	}
 };
 
-module.exports = {
-	verifyRegistration:verifyRegistration,
-        user:user,
-        name:NAME
-};
+state._init();
+
+module.exports = state;

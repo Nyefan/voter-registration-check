@@ -5,6 +5,7 @@ const Q = require('q');
 const help = require('../lib/utils.js');
 
 let state = {
+	Name: 'Kansas'
 	URL: "https://myvoteinfo.voteks.org/VoterView/RegistrantSearch.do",
 	default: {
 		'county':'Sedgwick'
