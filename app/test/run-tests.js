@@ -9,7 +9,7 @@ var getPath = function(stateName) {
     return statePath + stateName + '.js';
 }
 
-const alabama = require(getPath('alabama));
+const alabama = require(getPath('alabama'));
 //const alaska = require(getPath('alaska'));
 //const arizona = require(getPath('arizona'));
 //const arkansas = require(getPath('arkansas'));
