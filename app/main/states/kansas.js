@@ -7,7 +7,7 @@ const INFO = {
         'dobMonth':'#dobMonth',
         'dobDay':'#dobDay',
         'dobYear':'#dobYear',
-        'county':'',
+        'county':'#county',
         'submit':'input[type="submit"]',
         'status': '#registrant > span:nth-of-type(4)',
         'expectedStatus':'Active'
@@ -42,7 +42,7 @@ var verifyRegistration = function(client, user) {
 			.selectByValue(INFO['dobMonth'], user['dobMonth'])
                         .selectByValue(INFO['dobYear'], user['dobYear'])
                         .selectByValue(INFO['dobDay'], user['dobDay'])
-                        //.selectByVisibleText(INFO['county'], user['county'])
+                        .selectByVisibleText(INFO['county'], user['county'])
 			.click(INFO['submit'])
 			.waitForExist(INFO['status'], 5000)
 			.getText(INFO['status'])

@@ -7,14 +7,14 @@ const INFO = {
     'dobMonth':'#dobMonth',
     'dobDay':'#dobDay',
     'dobYear':'#dobYear',
-    'county':'',
+    'county':'#county',
     'submit':'input[type="submit"]',
     'status': '#registrant > span:nth-of-type(4)',
     'expectedStatus':'ACTIVE'
 };
 
 var user = {
-    'county':'',
+    'county':'Montgomery',
     'firstName':'Terri',
     'lastName':'Sewell',
     'birthdate':'01/01/1965',
@@ -42,6 +42,8 @@ var verifyRegistration = function(client, user) {
 			.selectByValue(INFO['dobMonth'], user['dobMonth'])
                         .selectByValue(INFO['dobYear'], user['dobYear'])
                         .selectByValue(INFO['dobDay'], user['dobDay'])
+                        // I believe this works, but I don't have a valid test case with a
+                        // county attached.
                         //.selectByVisibleText(INFO['county'], user['county'])
 			.click(INFO['submit'])
 			.waitForExist(INFO['status'], 5000)
