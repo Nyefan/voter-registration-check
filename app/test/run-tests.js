@@ -4,6 +4,20 @@ const statePath = '../main/states/';
 var phantomPath = require('phantomjs-prebuilt').path;
 
 // States that are commented out don't yet have submission scripts
+// TODO: the highest priority states to implement are:
+//       California         - June 7, 548 Delegates
+//       New Jersey         - June 7, 142 Delegates
+
+//       Puerto Rico        - June 5,  67 Delegates
+
+//       New Mexico         - June 7,  43 Delegates
+//       Montana            - June 7,  27 Delegates
+//       South Dakota       - June 7,  25 Delegates
+//       North Dakota       - June 7,  23 Delegates
+
+//       Virgin Islands     - June 4,  12 Delegates
+
+//       Washington D.C.    - June 14, 46 Delegates
 
 var getPath = function(stateName) {
     return statePath + stateName + '.js';
